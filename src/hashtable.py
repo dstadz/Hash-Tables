@@ -44,18 +44,52 @@ class HashTable:
         Fill this in.
         '''
         i = self._hash_mod(key)
-        print( key, value, i, self.storage[i])
         if self.storage[i] == None:
             self.storage[i] = LinkedPair(key, value)
-            print(key, self.storage[i].value, 'insert into:', i)
+            print(f'{i}: {value}')
+        cur = self.storage[i]
+        if cur.key == key:
+            cur.value = value
         else:
-            cur = self.storage[i]
-            print( cur.value, end = '')
+            if cur.next == None:
+                cur.next = LinkedPair(key, value)
             while cur.next != None:
-                print( ' =>', cur.value, end='')
+                if cur.key == key:
+                    cur.value = value
+                    break
                 cur = cur.next
             cur.next = LinkedPair(key, value)
-            print(' =>',cur.next.value)
+
+
+
+
+
+
+
+
+
+
+
+                # override = False
+                # print(f'{i}:', end=' ')
+                # while cur.next != None:
+                #     print(cur.value, '=> ', end='')
+                #     if cur.key == key:
+                #         override = True
+                #         print(f'override {cur.value}')
+                #         cur.value = value
+                #     cur = cur.next
+                # print(f'[{cur.value} changes to {value}]')
+                # if not override:
+                #     cur.next = LinkedPair(key, value)
+
+
+
+
+
+
+
+
     def remove(self, key):
         '''
         Remove the value stored with the given key.
@@ -78,9 +112,11 @@ class HashTable:
             return None
         else:
             cur = self.storage[i]
-            print( cur.value, end = '')
+            depth = 0
             while cur.key != key:
                 cur = cur.next
+                depth += 1
+            print(i, depth, cur.value)
             return cur.value
 
 
