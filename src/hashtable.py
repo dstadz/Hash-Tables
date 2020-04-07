@@ -1,25 +1,20 @@
 # '''
 # Linked List hash table key/value pair
 # '''
-
-
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
         self.next = None
 
-
 class HashTable:
     '''
     A hash table that with `capacity` buckets
     that accepts string keys
     '''
-
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
-
     def _hash(self, key):
         '''
         Hash an arbitrary key and return an integer.
@@ -27,7 +22,6 @@ class HashTable:
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
         return hash(key)
-
     def _hash_djb2(self, key):
         '''
         Hash an arbitrary key using DJB2 hash
@@ -35,14 +29,12 @@ class HashTable:
         OPTIONAL STRETCH: Research and implement DJB2
         '''
         pass
-
     def _hash_mod(self, key):
         '''
         Take an arbitrary key and return a valid integer index
         within the storage capacity of the hash table.
         '''
         return self._hash(key) % self.capacity
-
     def insert(self, key, value):
         '''
         Store the value with the given key.
@@ -52,25 +44,24 @@ class HashTable:
         Fill this in.
         '''
         i = self._hash_mod(key)
-        print( '\n',i, self.storage[i])
-
         if self.storage[i] == None:
             self.storage[i] = LinkedPair(key, value)
-            print(f'{i}: {value}')
+            print(f'{i}: {value}',end='')
         cur = self.storage[i]
         if cur.key == key:
             cur.value = value
+            print(f'{i}: {value}',end='')
         else:
             if cur.next == None:
                 cur.next = LinkedPair(key, value)
+                print(f'{i}: {value}')
+
             while cur.next != None:
-                print(f'=> {cur.value}', end='')
                 if cur.key == key:
                     cur.value = value
                     break
                 cur = cur.next
             cur.next = LinkedPair(key, value)
-
     def remove(self, key):
         '''
         Remove the value stored with the given key.
@@ -79,8 +70,17 @@ class HashTable:
         '''
         i = self._hash_mod(key)
         cur = self.storage[i]
-
-
+        if cur == None:
+            return None
+        elif cur.key == key:
+            cur.value = None
+        elif cur.next == None:
+            return None
+        else:
+            while cur.next != None:
+                cur = cur.next
+                if cur.key == key:
+                    cur.value = None
 
     def retrieve(self, key):
         '''
@@ -99,6 +99,9 @@ class HashTable:
                 depth += 1
             return cur.value
 
+
+
+
     def resize(self):
         '''
         Doubles the capacity of the hash table and
@@ -107,6 +110,7 @@ class HashTable:
         Fill this in.
         '''
         pass
+
 
 
 if __name__ == "__main__":
