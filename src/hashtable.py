@@ -76,10 +76,10 @@ class HashTable:
         i = self._hash_mod(key)
         if self.storage[i] == None:
             return None
-        elif self.storage[i]:
+        else:
             cur = self.storage[i]
-            while cur.next != None:
-                print(cur)
+            print( cur.value, end = '')
+            while cur.key != key:
                 cur = cur.next
             return cur.value
 
