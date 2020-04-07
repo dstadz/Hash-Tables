@@ -46,50 +46,22 @@ class HashTable:
         i = self._hash_mod(key)
         if self.storage[i] == None:
             self.storage[i] = LinkedPair(key, value)
-            print(f'{i}: {value}')
+            print(f'{i}: {value}',end='')
         cur = self.storage[i]
         if cur.key == key:
             cur.value = value
+            print(f'{i}: {value}',end='')
         else:
             if cur.next == None:
                 cur.next = LinkedPair(key, value)
+                print(f'{i}: {value}')
+
             while cur.next != None:
                 if cur.key == key:
                     cur.value = value
                     break
                 cur = cur.next
             cur.next = LinkedPair(key, value)
-
-
-
-
-
-
-
-
-
-
-
-                # override = False
-                # print(f'{i}:', end=' ')
-                # while cur.next != None:
-                #     print(cur.value, '=> ', end='')
-                #     if cur.key == key:
-                #         override = True
-                #         print(f'override {cur.value}')
-                #         cur.value = value
-                #     cur = cur.next
-                # print(f'[{cur.value} changes to {value}]')
-                # if not override:
-                #     cur.next = LinkedPair(key, value)
-
-
-
-
-
-
-
-
     def remove(self, key):
         '''
         Remove the value stored with the given key.
@@ -98,9 +70,18 @@ class HashTable:
         '''
         i = self._hash_mod(key)
         if self.storage[i] == None:
-            print('we messed up somewhere...')
-        else:
-            self.storage[i] = None
+            print('aint nuthin there, silly')
+            return None
+        cur = self.storage[i]
+        if cur.key == key:
+            trash = cur.value
+            cur.value = None
+            return trash
+        while cur.next != None:
+            if cur.key == key:
+                trash = cur.value
+                cur.value = None
+                return trash
     def retrieve(self, key):
         '''
         Retrieve the value stored with the given key.
@@ -116,7 +97,6 @@ class HashTable:
             while cur.key != key:
                 cur = cur.next
                 depth += 1
-            print(i, depth, cur.value)
             return cur.value
 
 
