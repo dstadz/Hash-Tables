@@ -99,9 +99,6 @@ class HashTable:
                 depth += 1
             return cur.value
 
-
-
-
     def resize(self):
         '''
         Doubles the capacity of the hash table and
@@ -109,7 +106,19 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        self.capacity = self.capacity * 2
+        clone = self.storage
+        self.storage = [None] * self.capacity
+        for c in clone:
+            if c == None:
+                pass
+            else:
+                k, v  = c.key, c.value
+                self.insert(k,v)
+                while c.next:
+                    c = c.next
+                    k, v  = c.key, c.value
+                    self.insert(k,v)
 
 
 
